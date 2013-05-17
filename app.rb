@@ -21,9 +21,11 @@ def redis
 end
 
 post '/' do
+  redis.set 'params', params
+
   if params[:payload]
     payload = JSON.parse(params[:payload])
-    redis.set 'github', params[:payload]
+    redis.set 'github-payload', params[:payload]
   end
 
   # Only trigger message when a new PR is opened
