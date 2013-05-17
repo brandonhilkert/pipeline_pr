@@ -6,11 +6,11 @@ get '/' do
 end
 
 post '/' do
-  url = params[:payload]['head_commit']['url']
-  msg = params[:payload]['head_commit']['message']
-  user = params[:payload]['head_commit']['author']['username']
-  hipchat_msg = format_text_for_pr_message(url, user, msg)
-  send_to_dev_underground(hipchat_msg)
+  # url = params[:payload]['head_commit']['url']
+  # msg = params[:payload]['head_commit']['message']
+  # user = params[:payload]['head_commit']['author']['username']
+  # hipchat_msg = format_text_for_pr_message(url, user, msg)
+  send_to_dev_underground(params[:payload])
 end
 
 def format_text_for_pr_message(url, user, msg)
