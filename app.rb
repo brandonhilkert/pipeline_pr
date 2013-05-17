@@ -6,10 +6,14 @@ get '/' do
 end
 
 post '/' do
-  # Only trigger message when a new PR is opened
-  if payload['action'] == 'opened'
-    hipchat_msg = format_text_for_pr_message(payload['pull_request'])
-    send_to_dev_underground(hipchat_msg)
+  if params[:payload]
+    payload = JSON.parse(params[:payload])
+
+    # Only trigger message when a new PR is opened
+    if payload['action'] == 'opened'
+      hipchat_msg = format_text_for_pr_message(payload['pull_request'])
+      send_to_dev_underground(hipchat_msg)
+    end
   end
 end
 
