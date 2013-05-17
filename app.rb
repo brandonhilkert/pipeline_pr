@@ -1,4 +1,5 @@
 require 'bundler'
+require 'logger'
 Bundler.require
 
 $logger = Logger.new('app.log')
