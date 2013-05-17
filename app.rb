@@ -1,13 +1,16 @@
 require 'bundler'
 Bundler.require
 
+$logger = Logger.new('app.log')
+
 get '/' do
   'Got it!'
   send_to_dev_underground 'Hey Players!'
 end
 
 post '/' do
-  puts params[:payload]
+  $logger.info params[:payload].inspect
+  # puts params[:payload]
   # push = JSON.parse(params[:payload])
   # "I got some JSON: #{push.inspect}"
 end
