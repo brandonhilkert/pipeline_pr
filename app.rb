@@ -7,8 +7,9 @@ get '/' do
 end
 
 post '/' do
-  push = JSON.parse(params[:payload])
-  "I got some JSON: #{push.inspect}"
+  puts params[:payload]
+  # push = JSON.parse(params[:payload])
+  # "I got some JSON: #{push.inspect}"
 end
 
 def send_to_dev_underground(msg)
