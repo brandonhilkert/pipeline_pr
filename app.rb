@@ -1,33 +1,25 @@
 require 'bundler'
-require 'logger'
 Bundler.require
 
-$logger = Logger.new('app.log')
-
 get '/' do
-  $logger.info "What the hell is wrong with this logger"
-  $stdout << "Hit the index page\n"
   'OMG'
 end
 
 post '/' do
-  $logger.info params[:payload]
   payload = JSON.parse(params[:payload])
-  $stdout << "Received #{payload} from Github\n"
-  # url = payload['head_commit']['url']
-  # msg = payload['head_commit']['message']
-  # user = payload['head_commit']['author']['username']
-  # hipchat_msg = format_text_for_pr_message(url, user, msg)
-  # send_to_dev_underground(payload.inspect)
+
+  # Only trigger message when a new PR is opened
+  if payload['action'] == 'opened'
+    hipchat_msg = format_text_for_pr_message(payload['pull_request'])
+    send_to_dev_underground(hipchat_msg)
+  end
 end
 
-def format_text_for_pr_message(url, user, msg)
+def format_text_for_pr_message(pr)
   str = ""
-  str << "New Pull Request from #{user}"
+  str << "New Pull Request:"
   str << "\n"
-  str << msg
-  str << "\n"
-  str << url
+  str << pr['html_url']
 end
 
 def send_to_dev_underground(msg)
