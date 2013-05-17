@@ -16,7 +16,7 @@ def redis
       password: url.password
     }
 
-    Redis::Namespace.new("pr:#{env}", redis: Redis.new(base_settings))
+    Redis::Namespace.new("pr:", redis: Redis.new(base_settings))
   )
 end
 
