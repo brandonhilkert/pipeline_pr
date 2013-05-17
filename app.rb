@@ -11,11 +11,11 @@ end
 post '/' do
   $logger.info params[:payload]
   payload = JSON.parse(params[:payload])
-  url = payload['head_commit']['url']
-  msg = payload['head_commit']['message']
-  user = payload['head_commit']['author']['username']
-  hipchat_msg = format_text_for_pr_message(url, user, msg)
-  send_to_dev_underground(params[:payload])
+  # url = payload['head_commit']['url']
+  # msg = payload['head_commit']['message']
+  # user = payload['head_commit']['author']['username']
+  # hipchat_msg = format_text_for_pr_message(url, user, msg)
+  send_to_dev_underground(payload.inspect)
 end
 
 def format_text_for_pr_message(url, user, msg)
