@@ -2,8 +2,11 @@ require 'bundler'
 require 'logger'
 Bundler.require
 
+$logger = Logger.new('app.log')
 
 get '/' do
+  $logger.info "What the hell is wrong with this logger"
+  $stdout << "Hit the index page\n"
   'OMG'
 end
 
