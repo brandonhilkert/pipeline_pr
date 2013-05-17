@@ -3,7 +3,6 @@ Bundler.require
 
 get '/' do
   'Got it!'
-  send_to_dev_underground 'Hey Players!'
 end
 
 post '/' do
