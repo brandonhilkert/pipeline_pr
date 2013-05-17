@@ -2,20 +2,20 @@ require 'bundler'
 require 'logger'
 Bundler.require
 
-$logger = Logger.new('app.log')
 
 get '/' do
-  'Got it!'
+  'OMG'
 end
 
 post '/' do
   $logger.info params[:payload]
   payload = JSON.parse(params[:payload])
+  $stdout << "Received #{payload} from Github\n"
   # url = payload['head_commit']['url']
   # msg = payload['head_commit']['message']
   # user = payload['head_commit']['author']['username']
   # hipchat_msg = format_text_for_pr_message(url, user, msg)
-  send_to_dev_underground(payload.inspect)
+  # send_to_dev_underground(payload.inspect)
 end
 
 def format_text_for_pr_message(url, user, msg)
