@@ -18,13 +18,10 @@ post '/' do
 end
 
 def format_text_for_pr_message(pr)
-  str = ""
-  str << "New Pull Request:"
-  str << "\n"
-  str << pr['html_url']
+  "New PR: <a href='#{pr['html_url']}' >#{pr['title']}</a> - #{pr['user']['login']}"
 end
 
 def send_to_dev_underground(msg)
   client = HipChat::Client.new(ENV['HIPCHAT_API'])
-  client['Dev Underground'].send('Mr. Hubot', msg)
+  client['Dev Underground'].send('Github', msg)
 end
