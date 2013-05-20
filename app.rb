@@ -18,7 +18,7 @@ post '/' do
 end
 
 def format_text_for_pr_message(pr)
-  "New PR: <a href='#{pr['html_url']}' >#{pr['title']}</a> - #{pr['user']['login']}"
+  "New PR: <a href='#{pr['html_url']}' >#{pr['title']}</a> - @#{pr['user']['login']}"
 end
 
 def send_to_dev_underground(msg)
