@@ -1,6 +1,8 @@
 require 'bundler'
 Bundler.require
 
+PIPELINE_COLLABORATORS = ['brandonhilkert', 'gammons', 'chadoh', 'theoddlinguist']
+
 get '/' do
   'OMG'
 end
@@ -11,17 +13,27 @@ post '/' do
 
     # Only trigger message when a new PR is opened
     if payload['action'] == 'opened'
-      hipchat_msg = format_text_for_pr_message(payload['pull_request'])
+      collaborator = pick_random_collaborator
+      hipchat_msg = format_text_for_pr_message(payload['pull_request'], collaborator)
       send_to_dev_underground(hipchat_msg)
+      add_comment_with_collaborator(payload['pull_request'], collaborator)
     end
   end
 end
 
-def format_text_for_pr_message(pr)
-  "New PR: <a href='#{pr['html_url']}' >#{pr['title']}</a> - @#{pr['user']['login']}"
+def format_text_for_pr_message(pr, collaborator)
+  "New PR: <a href='#{pr['html_url']}' >#{pr['title']}</a> - @#{pr['user']['login']} w/ collaborator @#{collaborator}"
 end
 
 def send_to_dev_underground(msg)
   client = HipChat::Client.new(ENV['HIPCHAT_API'])
   client['Dev Underground'].send('Github', msg)
+end
+
+def pick_random_collaborator
+  PIPELINE_COLLABORATORS.sample
+end
+
+def add_comment_with_collaborator(pr, collaborator)
+  RestClient.post "https://api.github.com/repos/PipelineDeals/pipeline_deals/issues/#{pr["number"]}/comments", { "body" => "Collaborator: @#{collaborator }".to_json, content_type: :json, accept: :json
 end
