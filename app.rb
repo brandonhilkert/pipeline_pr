@@ -35,5 +35,9 @@ def pick_random_collaborator
 end
 
 def add_comment_with_collaborator(pr, collaborator)
-  RestClient.post "https://api.github.com/repos/PipelineDeals/pipeline_deals/issues/#{pr["number"]}/comments", { "body" => "Collaborator: @#{collaborator }".to_json, content_type: :json, accept: :json
+  RestClient.post(
+    "https://api.github.com/repos/PipelineDeals/pipeline_deals/issues/#{pr["number"]}/comments?access_token=#{ENV['GITHUB_ACCESS_TOKEN']}",
+    { "body" => "Collaborator: @#{collaborator }" }.to_json,
+    content_type: :json,
+    accept: :json)
 end
