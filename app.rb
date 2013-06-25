@@ -13,7 +13,7 @@ post '/' do
 
     # Only trigger message when a new PR is opened
     if payload['action'] == 'opened'
-      collaborator = pick_random_collaborator
+      collaborator = pick_random_collaborator(payload['pull_request'])
       hipchat_msg = format_text_for_pr_message(payload['pull_request'], collaborator)
       send_to_dev_underground(hipchat_msg)
       add_comment_with_collaborator(payload['pull_request'], collaborator)
@@ -31,8 +31,9 @@ def send_to_dev_underground(msg)
   client['Dev Underground'].send('Github', msg)
 end
 
-def pick_random_collaborator
-  PIPELINE_COLLABORATORS.sample
+def pick_random_collaborator(pr)
+  potential_collaborators = PIPELINE_COLLABORATORS - pr["user"]["login"]
+  potential_collaborators.sample
 end
 
 def add_comment_with_collaborator(pr, collaborator)
