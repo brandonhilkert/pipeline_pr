@@ -17,6 +17,7 @@ post '/' do
       hipchat_msg = format_text_for_pr_message(payload['pull_request'], collaborator)
       send_to_dev_underground(hipchat_msg)
       add_comment_with_collaborator(payload['pull_request'], collaborator)
+      update_pr_assignee(payload['pull_request'], collaborator)
     end
   end
 end
@@ -38,6 +39,14 @@ def add_comment_with_collaborator(pr, collaborator)
   RestClient.post(
     "https://api.github.com/repos/PipelineDeals/pipeline_deals/issues/#{pr["number"]}/comments?access_token=#{ENV['GITHUB_ACCESS_TOKEN']}",
     { "body" => "Collaborator: @#{collaborator }" }.to_json,
+    content_type: :json,
+    accept: :json)
+end
+
+def update_pr_assignee(pr, collaborator)
+  RestClient.post(
+    "https://api.github.com/repos/PipelineDeals/pipeline_deals/issues/#{pr["number"]}?access_token=#{ENV['GITHUB_ACCESS_TOKEN']}",
+    { "assignee" => collaborator }.to_json,
     content_type: :json,
     accept: :json)
 end
