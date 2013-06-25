@@ -1,8 +1,6 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    daemons (1.1.9)
-    eventmachine (1.0.0)
     hipchat (0.8.0)
       httparty
       httparty
@@ -10,23 +8,25 @@ GEM
       multi_json (~> 1.0)
       multi_xml (>= 0.5.2)
     json (1.8.0)
+    kgio (2.8.0)
     mime-types (1.23)
     multi_json (1.7.1)
     multi_xml (0.5.3)
     rack (1.5.2)
     rack-protection (1.5.0)
       rack
+    raindrops (0.11.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
     sinatra (1.4.2)
       rack (~> 1.5, >= 1.5.2)
       rack-protection (~> 1.4)
       tilt (~> 1.3, >= 1.3.4)
-    thin (1.5.0)
-      daemons (>= 1.0.9)
-      eventmachine (>= 0.12.6)
-      rack (>= 1.0.0)
     tilt (1.4.1)
+    unicorn (4.6.2)
+      kgio (~> 2.6)
+      rack
+      raindrops (~> 0.7)
 
 PLATFORMS
   ruby
@@ -36,4 +36,4 @@ DEPENDENCIES
   json
   rest-client
   sinatra
-  thin
+  unicorn
