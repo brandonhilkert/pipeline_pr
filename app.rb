@@ -32,7 +32,7 @@ def send_to_dev_underground(msg)
 end
 
 def pick_random_collaborator(pr)
-  potential_collaborators = PIPELINE_COLLABORATORS - pr["user"]["login"]
+  potential_collaborators = PIPELINE_COLLABORATORS - Array(pr["user"]["login"])
   potential_collaborators.sample
 end
 
