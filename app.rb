@@ -1,8 +1,7 @@
 require 'bundler'
 Bundler.require
 
-# PIPELINE_COLLABORATORS = ['brandonhilkert', 'gammons', 'chadoh', 'TheOddLinguist']
-PIPELINE_COLLABORATORS = ['brandonhilkert', 'gammons', 'TheOddLinguist']
+PIPELINE_COLLABORATORS = ['brandonhilkert', 'gammons', 'chadoh', 'TheOddLinguist']
 
 get '/' do
   'OMG'
