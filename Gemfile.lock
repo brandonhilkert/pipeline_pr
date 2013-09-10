@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    crack (0.4.1)
+      safe_yaml (~> 0.9.0)
     hipchat (0.8.0)
       httparty
       httparty
@@ -18,6 +20,9 @@ GEM
     raindrops (0.11.0)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    ruby-fogbugz (0.1.1)
+      crack
+    safe_yaml (0.9.5)
     sinatra (1.4.2)
       rack (~> 1.5, >= 1.5.2)
       rack-protection (~> 1.4)
@@ -35,5 +40,6 @@ DEPENDENCIES
   hipchat
   json
   rest-client
+  ruby-fogbugz
   sinatra
   unicorn
