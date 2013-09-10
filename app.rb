@@ -56,10 +56,14 @@ end
 
 def resolve_fogbugz_ticket(title)
   fb_ticket_number = extract_fogbugz_ticket_number(title)
-  fogbugz = Fogbugz::Interface.new(token: ENV['FOGBUGZ_TOKEN'], url: ENV['FOGBUGZ_HOST'])
-  fogbugz.command(:resolve, :ixBug => fb_ticket_number)
+  if fb_ticket_number
+    fogbugz = Fogbugz::Interface.new(token: ENV['FOGBUGZ_TOKEN'], url: ENV['FOGBUGZ_HOST'])
+    fogbugz.command(:resolve, :ixBug => fb_ticket_number)
+  end
 end
 
 def extract_fogbugz_ticket_number(string)
   string.scan(/\#(\d+)/).first.first
+rescue
+  nil
 end
