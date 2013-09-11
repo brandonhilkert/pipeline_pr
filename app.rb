@@ -1,5 +1,6 @@
 require 'bundler'
 Bundler.require
+require 'fogbugz'
 
 # PIPELINE_COLLABORATORS = ['brandonhilkert', 'gammons', 'chadoh', 'TheOddLinguist']
 PIPELINE_COLLABORATORS = ['brandonhilkert', 'chadoh', 'TheOddLinguist']
