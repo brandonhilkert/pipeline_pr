@@ -58,7 +58,7 @@ def resolve_fogbugz_ticket(pr)
   fb_ticket_number = extract_fogbugz_ticket_number(pr['title'])
   if fb_ticket_number
     fogbugz = Fogbugz::Interface.new(token: ENV['FOGBUGZ_TOKEN'], uri: ENV['FOGBUGZ_HOST'])
-    fogbugz.command(:resolve, ixBug: fb_ticket_number, pr['html_url'])
+    fogbugz.command(:resolve, ixBug: fb_ticket_number, sEvent: pr['html_url'])
   end
 end
 
