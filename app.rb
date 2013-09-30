@@ -14,18 +14,31 @@ post '/' do
 
     # Only trigger message when a new PR is opened
     if payload['action'] == 'opened'
+
+      # May return nil if it's not being merged into develop (project pr)
       collaborator = pick_random_collaborator(payload['pull_request'])
+
       hipchat_msg = format_text_for_pr_message(payload['pull_request'], collaborator)
       send_to_dev_underground(hipchat_msg)
-      add_comment_with_collaborator(payload['pull_request'], collaborator)
-      update_pr_assignee(payload['pull_request'], collaborator)
+
+      if collaborator
+        add_comment_with_collaborator(payload['pull_request'], collaborator)
+        update_pr_assignee(payload['pull_request'], collaborator)
+      end
+
       resolve_fogbugz_ticket(payload['pull_request'])
     end
   end
 end
 
+def assign_collaborator?(pr)
+  pr["base"]["label"] == "develop"
+end
+
 def format_text_for_pr_message(pr, collaborator)
-  "New PR ##{pr['number']}: <a href='#{pr['html_url']}' >#{pr['title']}</a> - @#{pr['user']['login']} w/ collaborator @#{collaborator}"
+  message = "New PR ##{pr['number']}: <a href='#{pr['html_url']}' >#{pr['title']}</a> - @#{pr['user']['login']}"
+  message += "w/ collaborator @#{collaborator}" if collaborator
+  message
 end
 
 def send_to_dev_underground(msg)
@@ -34,8 +47,12 @@ def send_to_dev_underground(msg)
 end
 
 def pick_random_collaborator(pr)
-  potential_collaborators = PIPELINE_COLLABORATORS - Array(pr["user"]["login"])
-  potential_collaborators.sample
+  if assign_collaborator?(pr)
+    potential_collaborators = PIPELINE_COLLABORATORS - Array(pr["user"]["login"])
+    potential_collaborators.sample
+  else
+    nil
+  end
 end
 
 def add_comment_with_collaborator(pr, collaborator)
