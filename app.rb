@@ -37,7 +37,7 @@ end
 
 def format_text_for_pr_message(pr, collaborator)
   message = "New PR ##{pr['number']}: <a href='#{pr['html_url']}' >#{pr['title']}</a> - @#{pr['user']['login']}"
-  message += "w/ collaborator @#{collaborator}" if collaborator
+  message += " w/ collaborator @#{collaborator}" if collaborator
   message
 end
 
