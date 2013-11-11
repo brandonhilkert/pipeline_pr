@@ -30,7 +30,7 @@ post '/' do
 end
 
 def assign_collaborator?(pr)
-  pr["base"]["ref"] == "develop"
+  pr["base"]["ref"] == "master"
 end
 
 def format_text_for_pr_message(pr, collaborator)
