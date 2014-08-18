@@ -25,5 +25,5 @@ end
 
 def send_to_dev_underground(msg)
   client = HipChat::Client.new(ENV['HIPCHAT_API'])
-  client['Dev Underground'].send('Github', msg)
+  client['Engineering'].send('Github', msg)
 end
