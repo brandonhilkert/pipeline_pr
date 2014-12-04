@@ -1,6 +1,5 @@
 require 'bundler'
 Bundler.require
-require 'fogbugz'
 
 get '/' do
   'OMG'
