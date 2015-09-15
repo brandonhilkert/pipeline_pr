@@ -1,6 +1,5 @@
 require 'bundler'
 Bundler.require
-require 'fogbugz'
 
 get '/' do
   'OMG'
@@ -20,7 +19,7 @@ post '/' do
 end
 
 def format_text_for_pr_message(pr)
-  "New PR ##{pr['number']}: <a href='#{pr['html_url']}' >#{pr['title']}</a> - @#{pr['user']['login']}"
+  "PR: #{pr['head']['repo']['name']}/#{pr['number']} - <a href='#{pr['html_url']}' >#{pr['title']}</a> (#{pr['user']['login']})"
 end
 
 def send_to_dev_underground(msg)
