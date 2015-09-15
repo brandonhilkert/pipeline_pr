@@ -12,7 +12,7 @@ Usage
 
 ````Bash
   bundle install
-  ruby app.rb
+  foreman start
 ````
 
 Copyright
