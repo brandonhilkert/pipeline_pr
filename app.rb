@@ -11,18 +11,33 @@ post '/' do
 
     # Only trigger message when a new PR is opened
     if payload['action'] == 'opened'
-
-      hipchat_msg = format_text_for_pr_message(payload['pull_request'])
-      send_to_dev_underground(hipchat_msg)
+      msg = message_for_new_pr(payload['pull_request'])
+      send_to_dev_underground(msg)
+    elsif payload['action'] == 'closed' && payload['merged']
+      msg = message_for_pr_merge(payload['pull_request'])
+      send_to_operations_talk(msg)
     end
   end
 end
 
-def format_text_for_pr_message(pr)
+def message_for_new_pr(pr)
   "PR: #{pr['head']['repo']['name']}/#{pr['number']} - <a href='#{pr['html_url']}' >#{pr['title']}</a> (#{pr['user']['login']})"
+end
+
+def message_for_pr_merge(pr)
+  "MERGED: #{pr['head']['repo']['name']}/#{pr['number']} - <a href='#{pr['html_url']}' >#{pr['title']}</a> (#{pr['user']['login']})"
 end
 
 def send_to_dev_underground(msg)
   client = HipChat::Client.new(ENV['HIPCHAT_API'])
   client['Engineering'].send('Github', msg)
 end
+
+def send_to_operations_talk(msg)
+  client['Operations talk'].send('Github', msg, color: "green")
+end
+
+def hipchat_client
+  HipChat::Client.new(ENV['HIPCHAT_API'])
+end
+
