@@ -13,7 +13,7 @@ post '/' do
     if payload['action'] == 'opened'
       msg = message_for_new_pr(payload['pull_request'])
       send_to_dev_underground(msg)
-    elsif payload['action'] == 'closed' && payload['merged']
+    elsif payload['action'] == 'closed' && payload['pull_request']['merged']
       msg = message_for_pr_merge(payload['pull_request'])
       send_to_operations_talk(msg)
     end
