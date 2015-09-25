@@ -21,7 +21,7 @@ post '/' do
 end
 
 def message_for_new_pr(pr)
-  "PR: #{pr['head']['repo']['name']}/#{pr['number']} - <a href='#{pr['html_url']}' >#{pr['title']}</a> (#{pr['user']['login']})"
+  "#{pr['head']['repo']['name']}/#{pr['number']} - <a href='#{pr['html_url']}' >#{pr['title']}</a> (#{pr['user']['login']})"
 end
 
 def message_for_pr_merge(pr)
@@ -33,7 +33,7 @@ def send_to_dev_underground(msg)
 end
 
 def send_to_operations_talk(msg)
-  hipchat_client['Operations talk'].send('Github', msg, color: "green")
+  hipchat_client['Operations talk'].send('Github', msg)
 end
 
 def hipchat_client
