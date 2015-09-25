@@ -29,12 +29,11 @@ def message_for_pr_merge(pr)
 end
 
 def send_to_dev_underground(msg)
-  client = HipChat::Client.new(ENV['HIPCHAT_API'])
-  client['Engineering'].send('Github', msg)
+  hipchat_client['Engineering'].send('Github', msg)
 end
 
 def send_to_operations_talk(msg)
-  client['Operations talk'].send('Github', msg, color: "green")
+  hipchat_client['Operations talk'].send('Github', msg, color: "green")
 end
 
 def hipchat_client
