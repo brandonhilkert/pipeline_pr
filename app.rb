@@ -25,7 +25,7 @@ def message_for_new_pr(pr)
 end
 
 def message_for_pr_merge(pr)
-  "MERGED: #{pr['head']['repo']['name']}/#{pr['number']} - <a href='#{pr['html_url']}' >#{pr['title']}</a> (#{pr['user']['login']})"
+  "<strong>MERGED</strong>: #{pr['head']['repo']['name']}/#{pr['number']} - <a href='#{pr['html_url']}' >#{pr['title']}</a> (#{pr['user']['login']})"
 end
 
 def send_to_dev_underground(msg)
