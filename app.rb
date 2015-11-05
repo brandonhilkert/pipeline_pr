@@ -34,6 +34,7 @@ def send_to_engineering_in_slack(pr)
   text = "*#{pr['head']['repo']['name']}/#{pr['number']}* - <#{pr['html_url']}|#{pr['title']}> (#{pr['user']['login']})"
   attachment = {
     text: text,
+    color: "warning",
     mrkdwn_in: ["text"],
   }
   RestClient.post ENV["SLACK_WEBHOOK_URL"], { attachments: [attachment] }.to_json, content_type: :json, accept: :json
@@ -43,6 +44,7 @@ def send_to_operations_in_slack(pr)
   text = "*MERGED*: #{pr['head']['repo']['name']}/#{pr['number']} - <#{pr['html_url']}|#{pr['title']}> (#{pr['user']['login']})"
   attachment = {
     text: text,
+    color: "warning",
     mrkdwn_in: ["text"],
   }
   RestClient.post ENV["SLACK_WEBHOOK_URL"], { attachments: [attachment], channel: "#operations" }.to_json, content_type: :json, accept: :json
